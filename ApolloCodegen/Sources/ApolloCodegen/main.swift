@@ -59,7 +59,6 @@ func generateCode() {
         // Create the Codegen options object. This default setup assumes `schema.json` is in the target root folder, all queries are in some kind of subfolder of the target folder and will output as a single file to `API.swift` in the target folder. For alternate setup options, check out https://www.apollographql.com/docs/ios/api/ApolloCodegenLib/structs/ApolloCodegenOptions/
         let codegenOptions = ApolloCodegenOptions(targetRootURL: targetURL)
         
-        
         // Actually attempt to generate code.
         try ApolloCodegen.run(from: targetURL,
                               with: cliFolderURL,
@@ -73,7 +72,7 @@ func generateCode() {
 
 // MARK: - Actually run the functions you want to
 
-// NOTE: You probably don't want to run this on every build, so once you've got your schema downloaded, you probably want to comment this out unless you specifically _need_ to run this.
+// NOTE: You probably don't want to run this on every build, so once you've got your schema downloaded, you probably want to comment this out unless you specifically _want_ to download a new version of the schema.
 downloadSchema()
 
 // This should be run on every build.
