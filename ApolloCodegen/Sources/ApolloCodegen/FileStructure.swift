@@ -7,9 +7,6 @@ struct FileStructure {
     let sourceRootURL: URL
     let cliFolderURL: URL
     
-    let folderForDownloadedSchema: URL
-    let targetRootURL: URL
-    
     init() throws {
         // Grab the parent folder of this file on the filesystem
         let parentFolderOfScriptFile = FileFinder.findParentFolder()
@@ -26,19 +23,8 @@ struct FileStructure {
         self.cliFolderURL = sourceRootURL
           .apollo.childFolderURL(folderName: "ApolloCodegen")
           .apollo.childFolderURL(folderName: "ApolloCLI")
+
         
-        // Calculate where you want to create the folder where the schema will be downloaded by the ApolloCodegenLib framework.
-        // TODO: Replace the placeholder with the name of the actual folder where you want the downloaded schema saved. The default is set up to put it in your project's root.
-        self.folderForDownloadedSchema = self.sourceRootURL
-            .apollo.childFolderURL(folderName: "MyProject")
-        
-        try FileManager.default.apollo.createFolderIfNeeded(at: self.folderForDownloadedSchema)
-        
-        // TODO: Replace the placeholder with the folder that contains the target you're generating code for. Note that the placeholder currently has this as the same as the folder for the downloaded schema, but this does not have to be the case.
-        self.targetRootURL = self.sourceRootURL
-            .apollo.childFolderURL(folderName: "MyProject")
-        
-        try FileManager.default.apollo.createFolderIfNeeded(at: self.targetRootURL)
     }
 }
 
@@ -47,8 +33,6 @@ extension FileStructure: CustomDebugStringConvertible {
         """
         Source root URL: \(self.sourceRootURL)
         CLI folder URL: \(self.cliFolderURL)
-        Folder for downloaded schema: \(self.folderForDownloadedSchema)
-        Target root URL: \(self.targetRootURL)
         """
     }
 }
