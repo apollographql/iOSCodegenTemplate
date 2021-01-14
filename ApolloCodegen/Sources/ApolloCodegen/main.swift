@@ -11,35 +11,7 @@ struct SwiftScript: ParsableCommand {
         
         NOTE: If running from a compiled binary, prefix subcommands with `swift-script`. Otherwise use `swift run ApolloCodgen [subcommand]`.
         """,
-            subcommands: [GenerateCode.self, DownloadSchema.self])
-    
-    /// The sub-command to actually generate code.
-    struct GenerateCode: ParsableCommand {
-        static var configuration = CommandConfiguration(
-            commandName: "generate",
-            abstract: "Generates swift code from your schema + your operations based on information set up in the `GenerateCode` command.")
-        
-        mutating func run() throws {
-            let fileStructure = try FileStructure()
-            CodegenLogger.log("File structure: \(fileStructure)")
-            
-            // Get the root of the target for which you want to generate code.
-            // TODO: Replace the placeholder here with the name of of the folder containing your project's code files.
-            let targetRootURL = fileStructure.sourceRootURL
-                .apollo.childFolderURL(folderName: "MyProject")
-            
-            // Make sure the folder exists before trying to generate code.
-            try FileManager.default.apollo.createFolderIfNeeded(at: targetRootURL)
-
-            // Create the Codegen options object. This default setup assumes `schema.json` is in the target root folder, all queries are in some kind of subfolder of the target folder and will output as a single file to `API.swift` in the target folder. For alternate setup options, check out https://www.apollographql.com/docs/ios/api/ApolloCodegenLib/structs/ApolloCodegenOptions/
-            let codegenOptions = ApolloCodegenOptions(targetRootURL: targetRootURL)
-            
-            // Actually attempt to generate code.
-            try ApolloCodegen.run(from: targetRootURL,
-                                  with: fileStructure.cliFolderURL,
-                                  options: codegenOptions)
-        }
-    }
+            subcommands: [DownloadSchema.self, GenerateCode.self])
     
     /// The sub-command to download a schema from a provided endpoint.
     struct DownloadSchema: ParsableCommand {
@@ -71,6 +43,34 @@ struct SwiftScript: ParsableCommand {
             // Actually attempt to download the schema.
             try ApolloSchemaDownloader.run(with: fileStructure.cliFolderURL,
                                            options: schemaDownloadOptions)
+        }
+    }
+    
+    /// The sub-command to actually generate code.
+    struct GenerateCode: ParsableCommand {
+        static var configuration = CommandConfiguration(
+            commandName: "generate",
+            abstract: "Generates swift code from your schema + your operations based on information set up in the `GenerateCode` command.")
+        
+        mutating func run() throws {
+            let fileStructure = try FileStructure()
+            CodegenLogger.log("File structure: \(fileStructure)")
+            
+            // Get the root of the target for which you want to generate code.
+            // TODO: Replace the placeholder here with the name of of the folder containing your project's code files.
+            let targetRootURL = fileStructure.sourceRootURL
+                .apollo.childFolderURL(folderName: "MyProject")
+            
+            // Make sure the folder exists before trying to generate code.
+            try FileManager.default.apollo.createFolderIfNeeded(at: targetRootURL)
+
+            // Create the Codegen options object. This default setup assumes `schema.json` is in the target root folder, all queries are in some kind of subfolder of the target folder and will output as a single file to `API.swift` in the target folder. For alternate setup options, check out https://www.apollographql.com/docs/ios/api/ApolloCodegenLib/structs/ApolloCodegenOptions/
+            let codegenOptions = ApolloCodegenOptions(targetRootURL: targetRootURL)
+            
+            // Actually attempt to generate code.
+            try ApolloCodegen.run(from: targetRootURL,
+                                  with: fileStructure.cliFolderURL,
+                                  options: codegenOptions)
         }
     }
 }
