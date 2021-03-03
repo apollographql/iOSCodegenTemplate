@@ -36,8 +36,8 @@ struct SwiftScript: ParsableCommand {
             // Make sure the folder is created before trying to download something to it.
             try FileManager.default.apollo.createFolderIfNeeded(at: folderForDownloadedSchema)
             
-            // Create an options object for downloading the schema. Provided code will download the schema as JSON to a file called "schema.json". For full options check out https://www.apollographql.com/docs/ios/api/ApolloCodegenLib/structs/ApolloSchemaOptions/
-            let schemaDownloadOptions = ApolloSchemaOptions(endpointURL: endpoint,
+            // Create an options object for downloading the schema. Provided code will download the schema via an introspection query to the provided URL as JSON to a file called "schema.json". For full options check out https://www.apollographql.com/docs/ios/api/ApolloCodegenLib/structs/ApolloSchemaOptions/
+            let schemaDownloadOptions = ApolloSchemaOptions(downloadMethod: .introspection(endpointURL: endpoint),
                                                             outputFolderURL: folderForDownloadedSchema)
             
             // Actually attempt to download the schema.

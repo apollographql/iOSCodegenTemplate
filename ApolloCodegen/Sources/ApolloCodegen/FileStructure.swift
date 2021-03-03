@@ -23,8 +23,6 @@ struct FileStructure {
         self.cliFolderURL = sourceRootURL
           .apollo.childFolderURL(folderName: "ApolloCodegen")
           .apollo.childFolderURL(folderName: "ApolloCLI")
-
-        
     }
 }
 
