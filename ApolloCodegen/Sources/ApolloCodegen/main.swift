@@ -9,7 +9,7 @@ struct SwiftScript: ParsableCommand {
             abstract: """
         A swift-based utility for performing Apollo-related tasks.
         
-        NOTE: If running from a compiled binary, prefix subcommands with `swift-script`. Otherwise use `swift run ApolloCodgen [subcommand]`.
+        NOTE: If running from a compiled binary, prefix subcommands with `swift-script`. Otherwise use `swift run ApolloCodegen [subcommand]`.
         """,
             subcommands: [DownloadSchema.self, GenerateCode.self])
     
