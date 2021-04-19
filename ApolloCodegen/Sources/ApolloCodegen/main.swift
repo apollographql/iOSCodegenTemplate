@@ -48,6 +48,10 @@ struct SwiftScript: ParsableCommand {
     
     /// The sub-command to actually generate code.
     struct GenerateCode: ParsableCommand {
+        
+        @Option(help: "The name of the folder containing your project's code files.")
+        var folderName: String = "MyProject"
+        
         static var configuration = CommandConfiguration(
             commandName: "generate",
             abstract: "Generates swift code from your schema + your operations based on information set up in the `GenerateCode` command.")
@@ -57,9 +61,8 @@ struct SwiftScript: ParsableCommand {
             CodegenLogger.log("File structure: \(fileStructure)")
             
             // Get the root of the target for which you want to generate code.
-            // TODO: Replace the placeholder here with the name of of the folder containing your project's code files.
             let targetRootURL = fileStructure.sourceRootURL
-                .apollo.childFolderURL(folderName: "MyProject")
+                .apollo.childFolderURL(folderName: folderName)
             
             // Make sure the folder exists before trying to generate code.
             try FileManager.default.apollo.createFolderIfNeeded(at: targetRootURL)
