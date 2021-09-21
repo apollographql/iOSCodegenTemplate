@@ -24,9 +24,12 @@ final class ApolloCodegenTests: XCTestCase {
         process.waitUntilExit()
 
         let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: data, encoding: .utf8)
+        guard let output = String(data: data, encoding: .utf8) else {
+            XCTFail("Execution output should not be nil!")
+            return
+        }
 
-        XCTAssertEqual(output, "Hello, world!\n")
+        XCTAssertTrue(output.contains("A swift-based utility"))
     }
 
     /// Returns path to the built products directory.
