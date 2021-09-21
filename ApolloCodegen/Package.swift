@@ -13,7 +13,7 @@ let package = Package(
         .package(name: "Apollo",
                  url: "https://github.com/apollographql/apollo-ios.git",
                  /// Make sure this version matches the version in your iOS project!
-                 .upToNextMinor(from: "0.42.0")),
+                 .upToNextMinor(from: "0.49.0")),
         
         // The official Swift argument parser.
         .package(url: "https://github.com/apple/swift-argument-parser.git",
