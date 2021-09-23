@@ -66,3 +66,8 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# It is recommended to not store the ApolloCLI folder in the git repo.
+# It will be reconstructed when needed.
+
+ApolloCLI/
