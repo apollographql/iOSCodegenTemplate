@@ -73,10 +73,13 @@ struct SwiftScript: ParsableCommand {
         }
     }
 
+    /// A sub-command which lets you download the schema then generate swift code.
+    ///
+    /// NOTE: This will both take significantly longer than code generation alone and fail when you're offline, so this is not recommended for use in a Run Phase Build script that runs with every build of your project.
     struct DownloadSchemaAndGenerateCode: ParsableCommand {
         static var configuration = CommandConfiguration(
             commandName: "all",
-            abstract: "Downloads the schema and generates swift code.")
+            abstract: "Downloads the schema and generates swift code. NOTE: Not recommended for use as part of a Run Phase Build Script.")
 
         func run() throws {
             try DownloadSchema().run()
