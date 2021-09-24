@@ -11,7 +11,7 @@ struct SwiftScript: ParsableCommand {
         
         NOTE: If running from a compiled binary, prefix subcommands with `swift-script`. Otherwise use `swift run ApolloCodegen [subcommand]`.
         """,
-            subcommands: [DownloadSchema.self, GenerateCode.self])
+            subcommands: [DownloadSchema.self, GenerateCode.self, DownloadSchemaAndGenerateCode.self])
     
     /// The sub-command to download a schema from a provided endpoint.
     struct DownloadSchema: ParsableCommand {
@@ -19,7 +19,7 @@ struct SwiftScript: ParsableCommand {
             commandName: "downloadSchema",
             abstract: "Downloads the schema with the settings you've set up in the `DownloadSchema` command in `main.swift`.")
         
-        mutating func run() throws {
+        func run() throws {
             let fileStructure = try FileStructure()
             CodegenLogger.log("File structure: \(fileStructure)")
             
@@ -51,7 +51,7 @@ struct SwiftScript: ParsableCommand {
             commandName: "generate",
             abstract: "Generates swift code from your schema + your operations based on information set up in the `GenerateCode` command.")
         
-        mutating func run() throws {
+        func run() throws {
             let fileStructure = try FileStructure()
             CodegenLogger.log("File structure: \(fileStructure)")
             
@@ -70,6 +70,17 @@ struct SwiftScript: ParsableCommand {
             try ApolloCodegen.run(from: targetRootURL,
                                   with: fileStructure.cliFolderURL,
                                   options: codegenOptions)
+        }
+    }
+
+    struct DownloadSchemaAndGenerateCode: ParsableCommand {
+        static var configuration = CommandConfiguration(
+            commandName: "all",
+            abstract: "Downloads the schema and generates swift code.")
+
+        func run() throws {
+            try DownloadSchema().run()
+            try GenerateCode().run()
         }
     }
 }
