@@ -2,24 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "Apollo",
-        "repositoryURL": "https://github.com/apollographql/apollo-ios.git",
-        "state": {
-          "branch": null,
-          "revision": "d93568fb58f3eed95c2a0068d830a39a6e9d6c97",
-          "version": "0.50.0"
-        }
-      },
-      {
-        "package": "SQLite.swift",
-        "repositoryURL": "https://github.com/stephencelis/SQLite.swift.git",
-        "state": {
-          "branch": null,
-          "revision": "60a65015f6402b7c34b9a924f755ca0a73afeeaa",
-          "version": "0.13.1"
-        }
-      },
-      {
         "package": "swift-argument-parser",
         "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
         "state": {
