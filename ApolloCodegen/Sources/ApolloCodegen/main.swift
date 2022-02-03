@@ -81,6 +81,7 @@ struct SwiftScript: ParsableCommand {
       /// The name of the module that will contain your generated schema objects.
       let generatedSchemaModuleName: String = "API"
 
+      /// The URL where the generated schema files will be written to.
       let schemaModuleURL = SourceRootURL
         .apollo.childFolderURL(folderName: generatedSchemaModuleName)
 
