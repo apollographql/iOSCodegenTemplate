@@ -57,11 +57,11 @@ struct SwiftScript: ParsableCommand {
       // https://www.apollographql.com/docs/ios/api/ApolloCodegenLib/structs/ApolloSchemaDownloadConfiguration/
       let schemaDownloadOptions = ApolloSchemaDownloadConfiguration(
         using: .introspection(endpointURL: endpoint),
-        outputURL: SchemaOutputURL
+        outputPath: SchemaOutputURL.path
       )
 
       // Actually attempt to download the schema.
-      try ApolloSchemaDownloader.fetch(with: schemaDownloadOptions)
+      try ApolloSchemaDownloader.fetch(configuration: schemaDownloadOptions)
     }
   }
 
@@ -91,11 +91,12 @@ struct SwiftScript: ParsableCommand {
 
       // Create the Codegen configuration object. For all configuration parameters see: https://www.apollographql.com/docs/ios/api/ApolloCodegenLib/structs/ApolloCodegenConfiguration/
       let codegenConfiguration = ApolloCodegenConfiguration(
+        schemaName: generatedSchemaModuleName,
         input: ApolloCodegenConfiguration.FileInput(schemaPath: SchemaOutputURL.path),
         output: ApolloCodegenConfiguration.FileOutput(
           schemaTypes: ApolloCodegenConfiguration.SchemaTypesFileOutput(
             path: schemaModuleURL.path,
-            dependencyAutomation: .manuallyLinked(namespace: generatedSchemaModuleName))
+            moduleType: .embeddedInTarget(name: generatedSchemaModuleName))
         )
       )
 
