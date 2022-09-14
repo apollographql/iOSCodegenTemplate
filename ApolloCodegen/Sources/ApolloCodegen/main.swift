@@ -21,9 +21,9 @@ struct SwiftScript: ParsableCommand {
   static let SourceRootURL: URL = {
     let parentFolderOfScriptFile = FileFinder.findParentFolder()
     let sourceRootURL = parentFolderOfScriptFile
-      .apollo.parentFolderURL() // Result: Sources folder
-      .apollo.parentFolderURL() // Result: ApolloCodegen folder
-      .apollo.parentFolderURL() // Result: Project source root folder
+      .parentFolderURL() // Result: Sources folder
+      .parentFolderURL() // Result: ApolloCodegen folder
+      .parentFolderURL() // Result: Project source root folder
 
     CodegenLogger.log("Source Root URL: \(sourceRootURL)")
     return sourceRootURL
@@ -48,7 +48,7 @@ struct SwiftScript: ParsableCommand {
 
       // Make sure the folder is created before trying to download something to it.
       let folderForDownloadedSchema = SchemaOutputURL.deletingLastPathComponent()
-      try FileManager.default.apollo.createDirectoryIfNeeded(atPath: folderForDownloadedSchema.path)
+      try ApolloFileManager.default.createDirectoryIfNeeded(atPath: folderForDownloadedSchema.path)
 
       // Create a configuration object for downloading the schema.
       // Provided code will download the schema via an introspection query to the provided URL as
@@ -74,20 +74,18 @@ struct SwiftScript: ParsableCommand {
     func run() throws {
       // TODO: Replace the placeholder here with the name of the folder containing your project's code files.
       /// The root of the target for which you want to generate code.
-      let targetRootURL = SourceRootURL
-        .apollo.childFolderURL(folderName: "MyProject")
+      let targetRootURL = SourceRootURL.childFolderURL(folderName: "MyProject")
 
       // TODO: Replace the placeholder here with the name you would like to give your schema.
       /// The name of the module that will contain your generated schema objects.
       let generatedSchemaModuleName: String = "API"
 
       /// The URL where the generated schema files will be written to.
-      let schemaModuleURL = SourceRootURL
-        .apollo.childFolderURL(folderName: generatedSchemaModuleName)
+      let schemaModuleURL = SourceRootURL.childFolderURL(folderName: generatedSchemaModuleName)
 
       // Make sure the folders exists before trying to generate code.
-      try FileManager.default.apollo.createDirectoryIfNeeded(atPath: targetRootURL.path)
-      try FileManager.default.apollo.createDirectoryIfNeeded(atPath: schemaModuleURL.path)
+      try ApolloFileManager.default.createDirectoryIfNeeded(atPath: targetRootURL.path)
+      try ApolloFileManager.default.createDirectoryIfNeeded(atPath: schemaModuleURL.path)
 
       // Create the Codegen configuration object. For all configuration parameters see: https://www.apollographql.com/docs/ios/api/ApolloCodegenLib/structs/ApolloCodegenConfiguration/
       let codegenConfiguration = ApolloCodegenConfiguration(
