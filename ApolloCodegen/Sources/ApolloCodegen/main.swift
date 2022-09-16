@@ -99,7 +99,7 @@ struct SwiftScript: ParsableCommand {
       )
 
       // Actually attempt to generate code.
-      try ApolloCodegen.build(with: codegenConfiguration)
+      try ApolloCodegen.build(with: codegenConfiguration, withRootURL: targetRootURL)
     }
   }
 
